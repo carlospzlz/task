@@ -26,16 +26,15 @@ class Solution(object):
         Breadth-First-Search from start to end using a queue.
 
         In order to optimize the algorithm, we do a pre-computation grouping
-        the neighbours. See '_group_neighbours'
+        the neighbours. See '_group_neighbours'.
 
         The runtime complexity of this algorithm is bounded by:
 
-                    O(n * l) + O(v + e)
+            O(n*l) + O(n + e) -> O(n*l + n + e) -> O(n*l + e)
 
-        n: number of words
-        l: number of letters
-        v: vertex of the graph (words)
-        e: edges of the graph (neighbourhoods)
+        n: number of words.
+        l: number of letters per word.
+        e: edges of the graph (neighbourhoods).
 
         Assumptions made:
             - Start and end are valid words.
@@ -50,10 +49,8 @@ class Solution(object):
         visited = set([start])
         shortest_transformations_length = -1
         while shortest_transformations_length == -1 and queue:
-            word, number_of_transformations = queue.popleft()
-            shortest_transformations_length = self._visit_word_neighbours(
-               word, end, neighbours, queue, visited,
-               number_of_transformations)
+            shortest_transformations_length = self._visit_next_word_neighbours(
+               queue, end, neighbours, visited)
         return shortest_transformations_length
 
     def _group_neighbours(self, words):
@@ -97,7 +94,7 @@ class Solution(object):
             "do?" : ["dot", "dog"]
 
         Being n the number of words and l the number of letters, this
-        pre-computation has a cost of O(n * l)
+        pre-computation has a cost of O(n*l).
         """
         neighbours = {}
         for word in words:
@@ -106,18 +103,13 @@ class Solution(object):
                 neighbours[pattern] = neighbours.get(pattern, []) + [word]
         return neighbours
 
-    def _visit_word_neighbours(
-            self, word, end, neighbours, queue, visited,
-            number_of_transformations):
+    def _visit_next_word_neighbours(self, queue, end, neighbours, visited):
         """
         Args:
-            word (str): Word to visit the neighbours for.
+            queue (Deque[(str, int)]): Auxiliar queue for the BFS.
             end (str): Ending word of the transformation sequence.
             neighours (Dict{str, List[str]}: Neighbours indexed by pattern.
-            queue (Deque[(str, int)]): Auxiliar queue for the BFS.
             visited (Set{str}): Already visited words.
-            number_of_transformations (int): Number of transformations needed
-                to reach the previous word.
  
         Returns:
             int. Number of transformation needed to reach the end. -1 if not
@@ -126,6 +118,7 @@ class Solution(object):
         With the help of the neighbours dictionary we iterate over all the
         neighbours that satisfy the word's pattern and visit them.
         """
+        word, number_of_transformations = queue.popleft()
         for letter_index in range(len(word)):
             pattern = self._get_pattern(word, letter_index)
             for neighbour in neighbours[pattern]:

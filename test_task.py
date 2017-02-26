@@ -140,9 +140,9 @@ class Test_Solution(unittest.TestCase):
         result = my_solution._group_neighbours(words)
         self.assertEqual(result, expected)
 
-    def test__visit_word_neighbours_end_not_found(self):
+    def test__visit_next_word_neighbours_end_not_found(self):
         """
-        Test that the neighbours of a word are visited correclty when the end
+        Test that the neighbours of a word are visited correctly when the end
         is not found yet.
 
                  cop
@@ -152,19 +152,17 @@ class Test_Solution(unittest.TestCase):
                  sup
         """
         my_solution = task.Solution()
-        word = "cup"
+        queue = deque([("cup", 0)])
         end = "foo"
         neighbours = {
             "?up" : ["cup", "sup"],
             "c?p" : ["cup", "cop"],
             "cu?" : ["cup", "mug"]
         }
-        queue = deque()
         visited = {"cup"}
-        number_of_transformations = 0
 
-        result = my_solution._visit_word_neighbours(
-            word, end, neighbours, queue, visited, number_of_transformations)
+        result = my_solution._visit_next_word_neighbours(
+            queue, end, neighbours, visited)
 
         expected_result = -1
         expected_queue_list = [("cop", 1), ("mug", 1), ("sup", 1)]
@@ -185,19 +183,17 @@ class Test_Solution(unittest.TestCase):
                  *sup
         """
         my_solution = task.Solution()
-        word = "cup"
+        queue = deque([("cup", 0)])
         end = "cop"
         neighbours = {
             "?up" : ["cup", "sup"],
             "c?p" : ["cup", "cop"],
             "cu?" : ["cup", "mug"]
         }
-        queue = deque()
         visited = {"cup"}
-        number_of_transformations = 0
 
-        result = my_solution._visit_word_neighbours(
-            word, end, neighbours, queue, visited, number_of_transformations)
+        result = my_solution._visit_next_word_neighbours(
+            queue, end, neighbours, visited)
 
         expected_result = 1
         self.assertEqual(result, expected_result)
@@ -255,9 +251,7 @@ class Test_Solution(unittest.TestCase):
         built and returned correctly.
         """
         my_solution = task.Solution()
-        word = "spam"
-        letter_index = 2
-        result = my_solution._get_pattern(word, letter_index)
+        result = my_solution._get_pattern("spam", 2)
         expected = "sp?m"
         self.assertEqual(result, expected)
 
@@ -267,9 +261,7 @@ class Test_Solution(unittest.TestCase):
         built and returned correctly.
         """
         my_solution = task.Solution()
-        word = "spam"
-        letter_index = 0
-        result = my_solution._get_pattern(word, letter_index)
+        result = my_solution._get_pattern("spam", 0)
         expected = "?pam"
         self.assertEqual(result, expected)
 
@@ -279,8 +271,6 @@ class Test_Solution(unittest.TestCase):
         and returned correctly.
         """
         my_solution = task.Solution()
-        word = "spam"
-        letter_index = 3
-        result = my_solution._get_pattern(word, letter_index)
+        result = my_solution._get_pattern("spam", 3)
         expected = "spa?"
         self.assertEqual(result, expected)
