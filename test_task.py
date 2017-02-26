@@ -75,6 +75,24 @@ class Test_Solution(unittest.TestCase):
         expected = 0
         self.assertEqual(result, expected)
 
+    def test_find_shortest_transformations_length_start_and_end_empty(self):
+        """
+        Test case where the start is the end and both are empty.
+
+        Graph:
+
+            *""
+
+        """
+        my_solution = task.Solution()
+        start = ""
+        end = ""
+        words = [""]
+        result = my_solution.find_shortest_transformations_length(
+            start, end, words)
+        expected = 0
+        self.assertEqual(result, expected)
+
     def test_find_shortest_transformations_length_end_is_unreachable(self):
         """
         Test case for when there is not a transformation sequence from the
