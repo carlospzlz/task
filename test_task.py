@@ -147,9 +147,10 @@ class Test_Solution(unittest.TestCase):
 
                  cop
                /
-           cup - mug    *foo
+           cup - mug        *foo
                \
                  sup
+
         """
         my_solution = task.Solution()
         queue = deque([("cup", 0)])
@@ -176,11 +177,12 @@ class Test_Solution(unittest.TestCase):
         Test that when the end word is among the neighbours the number of
         transformations is returned correctly.
 
-                 cop
+                 *cop
                /
            cup - mug
                \
-                 *sup
+                 sup
+
         """
         my_solution = task.Solution()
         queue = deque([("cup", 0)])
