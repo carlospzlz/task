@@ -81,7 +81,7 @@ class Test_Solution(unittest.TestCase):
 
         Graph:
 
-            *""
+            ^*""
 
         """
         my_solution = task.Solution()
