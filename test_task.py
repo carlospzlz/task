@@ -206,7 +206,7 @@ class Test_Solution(unittest.TestCase):
         and the auxiliar data structures (queue, visited) are updated
         correctly.
 
-            foo    *spam
+            foo        *spam
 
         """
         my_solution = task.Solution()
