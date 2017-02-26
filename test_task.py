@@ -124,12 +124,12 @@ class Test_Solution(unittest.TestCase):
 
     def test__visit_word_neighbours_end_not_found(self):
         """
-        Test that the neighbours of a word are visited correclty when the end is
-        not found yet.
+        Test that the neighbours of a word are visited correclty when the end
+        is not found yet.
 
                  cop
                /
-           cup - mug
+           cup - mug    *foo
                \
                  sup
         """

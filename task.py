@@ -35,7 +35,7 @@ class Solution(object):
         n: number of words
         l: number of letters
         v: vertex of the graph (words)
-        e: edges of the graph (neighbours)
+        e: edges of the graph (neighbourhoods)
 
         Assumptions made:
             - Start and end are valid words.
@@ -65,7 +65,7 @@ class Solution(object):
             Dict{str, List[str]}. The words grouped by pattern.
 
         In order to avoid checking every single word to find the neighbours of
-        a certain word (which would give us O(n^2)), we perfom this neighbour
+        a certain word (which would give us O(n^2)), we perfom this neighbours
         grouping.
 
         We build a pattern where one of the letters can be any, and we group
@@ -108,7 +108,7 @@ class Solution(object):
 
     def _visit_word_neighbours(
             self, word, end, neighbours, queue, visited,
-             number_of_transformations):
+            number_of_transformations):
         """
         Args:
             word (str): Word to visit the neighbours for.
@@ -124,7 +124,7 @@ class Solution(object):
                  reached yet.
 
         With the help of the neighbours dictionary we iterate over all the
-        neighbours that satisfy the word's pattern and we visit them.
+        neighbours that satisfy the word's pattern and visit them.
         """
         for letter_index in range(len(word)):
             pattern = self._get_pattern(word, letter_index)
@@ -167,6 +167,12 @@ class Solution(object):
             letter_index (int): Index of the letter that can be any letter.
 
         Returns:
-            str. Pattern built by replacing the i letter of word by '?'.
+            str. Pattern built by replacing the letter at index_letter of word
+                 by '?'.
+
+        Examples:
+            _get_pattern("spam", 2) -> "sp?m"
+            _get_pattern("spam", 0) -> "?pam"
+            _get_pattern("spam", 3) -> "spa?"
         """
         return "{}?{}".format(word[:letter_index], word[letter_index+1:])
